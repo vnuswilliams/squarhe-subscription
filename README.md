@@ -1,10 +1,6 @@
 <h1 align="center">Laravel Subscription</h1>
 
-<p align="center"><a href="https://packagist.org/packages/lucasdotvin/laravel-soulbscription"><img alt="Latest Version on Packagist" src="https://img.shields.io/packagist/v/lucasdotvin/laravel-soulbscription.svg?style=flat-square"></a>
-<a href="https://github.com/lucasdotvin/laravel-soulbscription/actions/workflows/run-tests.yml"><img src="https://github.com/lucasdotvin/laravel-soulbscription/actions/workflows/run-tests.yml/badge.svg?branch=main" alt="run-tests"></a>
-<a href="https://codecov.io/gh/lucasdotvin/laravel-soulbscription"><img src="https://codecov.io/gh/lucasdotvin/laravel-soulbscription/branch/develop/graph/badge.svg?token=9NUYY1E28D"/></a>
-<a href="https://github.com/lucasdotvin/laravel-soulbscription/actions/workflows/php-cs-fixer.yml"><img src="https://github.com/lucasdotvin/laravel-soulbscription/actions/workflows/php-cs-fixer.yml/badge.svg?branch=main" alt="Check &amp; fix styling"></a>
-<a href="https://packagist.org/packages/lucasdotvin/laravel-soulbscription"><img alt="Total Downloads" src="https://img.shields.io/packagist/dt/lucasdotvin/laravel-soulbscription.svg?style=flat-square"></a></p>
+<p align="center"><a href="https://packagist.org/packages/vnuswilliams/squarhe-subscription">
 
 ## About
 
@@ -15,7 +11,7 @@ A straightforward interface to handle subscriptions and features consumption.
 You can install the package via composer:
 
 ```bash
-composer require lucasdotvin/laravel-soulbscription
+composer require vnuswilliams/squarhe-subscription
 ```
 
 The package migrations are loaded automatically, but you can still publish them with this command:
@@ -33,8 +29,6 @@ If you already use this package and need to move to a newer version, don't forge
 php artisan vendor:publish --tag="soulbscription-migrations-upgrades-1.x-2.x"
 php artisan migrate
 ```
-
-> Check out the available upgrade migrations by looking at the [upgrades folder](https://github.com/lucasdotvin/laravel-soulbscription/tree/develop/database/migrations/upgrades).
 
 ## Usage
 
@@ -500,24 +494,3 @@ $subscriber->giveTicketFor('deploy-minutes', null, 10);
 ```bash
 composer test
 ```
-
-## Changelog
-
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## Contributing
-
-Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
-
-## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
-
-## Credits
-
-- [Lucas Vinicius](https://github.com/lucasdotvin)
-- [All Contributors](../../contributors)
-
-## License
-
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
