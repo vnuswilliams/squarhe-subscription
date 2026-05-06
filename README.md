@@ -21,6 +21,12 @@ php artisan vendor:publish --tag="soulbscription-migrations"
 php artisan migrate
 ```
 
+###
+if you use gate and policies, you can Publish Subscription policy
+```bash
+php artisan vendor: publish --tag="soulbscription-policies"
+```
+
 ## Upgrades
 
 If you already use this package and need to move to a newer version, don't forget to publish the upgrade migrations:
