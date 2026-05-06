@@ -5,6 +5,12 @@ namespace Squarhe\Subscription\Enums;
 use Carbon\CarbonInterface;
 use Illuminate\Support\Str;
 
+/**
+ * Periodicity helper.
+ *
+ * Centralizes supported recurrence units (day, week, month, year)
+ * and provides a signed date-difference calculation between two dates.
+ */
 class PeriodicityType
 {
     public const Year = 'Year';
@@ -15,6 +21,14 @@ class PeriodicityType
 
     public const Day = 'Day';
 
+    /**
+     * Calculates the signed difference between two dates using a Carbon unit.
+     *
+     * @param CarbonInterface $from
+     * @param CarbonInterface $to
+     * @param string $unit
+     * @return int
+     */
     public static function getDateDifference(CarbonInterface $from, CarbonInterface $to, string $unit): int
     {
         if ($from->isAfter($to)) {

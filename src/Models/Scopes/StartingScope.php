@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
 
+/**
+ * Global scope: excludes records whose started_at is in the future.
+ */
 class StartingScope implements Scope
 {
     protected $extensions = [

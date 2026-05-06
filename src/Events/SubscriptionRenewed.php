@@ -7,12 +7,18 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Squarhe\Subscription\Models\Subscription;
 
+/**
+ * Event dispatched when a subscription is renewed.
+ */
 class SubscriptionRenewed
 {
     use Dispatchable;
     use InteractsWithSockets;
     use SerializesModels;
 
+    /**
+     * @param Subscription $subscription
+     */
     public function __construct(
         public Subscription $subscription,
     ) {
