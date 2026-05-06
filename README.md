@@ -447,6 +447,12 @@ In order to use this feature, you have to enable tickets in your configuration f
 php artisan vendor:publish --tag="soulbscription-config"
 ```
 
+### Publish Subscription policy
+
+```bash
+php artisan vendor:publish --tag="soulbscription-policies"
+```
+
 Finally, open the `soulbscription.php` file and set the `feature_tickets` flag to `true`. That's it, you now can use tickets!
 
 #### Creating Tickets
