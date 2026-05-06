@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
 
+/**
+ * Global scope: excludes suppressed records.
+ */
 class SuppressingScope implements Scope
 {
     protected $extensions = [

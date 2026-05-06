@@ -19,6 +19,13 @@ use Squarhe\Subscription\Models\Scopes\ExpiringWithGraceDaysScope;
 use Squarhe\Subscription\Models\Scopes\StartingScope;
 use Squarhe\Subscription\Models\Scopes\SuppressingScope;
 
+/**
+ * Subscription model.
+ *
+ * Represents a subscriber's active (or historical) subscription to a plan.
+ * Stores lifecycle dates (start, expiration, grace, suppression, cancellation)
+ * and exposes lifecycle business operations (start, renew, cancel, suppress).
+ */
 class Subscription extends Model
 {
     use ExpiresAndHasGraceDays;
@@ -27,10 +34,20 @@ class Subscription extends Model
     use Starts;
     use Suppresses;
 
+    /**
+     * Dates automatically cast to Carbon objects.
+     *
+     * @var array<int, string>
+     */
     protected $dates = [
         'canceled_at',
     ];
 
+    /**
+     * Mass assignable attributes.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
         'canceled_at',
         'expired_at',
@@ -40,21 +57,42 @@ class Subscription extends Model
         'was_switched',
     ];
 
+    /**
+     * Plan associated with this subscription.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function plan()
     {
         return $this->belongsTo(config('soulbscription.models.plan'));
     }
 
+    /**
+     * Renewal history for this subscription.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function renewals()
     {
         return $this->hasMany(config('soulbscription.models.subscription_renewal'));
     }
 
+    /**
+     * Polymorphic subscriber that owns the subscription.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
     public function subscriber()
     {
         return $this->morphTo('subscriber');
     }
 
+    /**
+     * Scope for non-active subscriptions (expired, not started, or suppressed).
+     *
+     * @param Builder $query
+     * @return Builder
+     */
     public function scopeNotActive(Builder $query)
     {
         return $query->withoutGlobalScopes([
@@ -69,16 +107,33 @@ class Subscription extends Model
             });
     }
 
+    /**
+     * Scope for canceled subscriptions.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
     public function scopeCanceled(Builder $query)
     {
         return $query->whereNotNull('canceled_at');
     }
 
+    /**
+     * Scope for non-canceled subscriptions.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
     public function scopeNotCanceled(Builder $query)
     {
         return $query->whereNull('canceled_at');
     }
 
+    /**
+     * Marks the subscription as resulting from a plan switch.
+     *
+     * @return self
+     */
     public function markAsSwitched(): self
     {
         return $this->fill([
@@ -86,6 +141,12 @@ class Subscription extends Model
         ]);
     }
 
+    /**
+     * Starts the subscription at the given date and dispatches the appropriate event.
+     *
+     * @param CarbonInterface|null $startDate
+     * @return self
+     */
     public function start(?CarbonInterface $startDate = null): self
     {
         $startDate = $startDate ?: today();
@@ -102,6 +163,12 @@ class Subscription extends Model
         return $this;
     }
 
+    /**
+     * Renews the subscription and recalculates expiration and grace period.
+     *
+     * @param CarbonInterface|null $expirationDate
+     * @return self
+     */
     public function renew(?CarbonInterface $expirationDate = null): self
     {
         $this->renewals()->create([
@@ -126,6 +193,12 @@ class Subscription extends Model
         return $this;
     }
 
+    /**
+     * Cancels the subscription at the given date.
+     *
+     * @param CarbonInterface|null $cancelDate
+     * @return self
+     */
     public function cancel(?CarbonInterface $cancelDate = null): self
     {
         $cancelDate = $cancelDate ?: now();
@@ -138,6 +211,12 @@ class Subscription extends Model
         return $this;
     }
 
+    /**
+     * Suppresses the subscription at the given date.
+     *
+     * @param CarbonInterface|null $suppressation
+     * @return self
+     */
     public function suppress(?CarbonInterface $suppressation = null)
     {
         $suppressationDate = $suppressation ?: now();
@@ -150,6 +229,11 @@ class Subscription extends Model
         return $this;
     }
 
+    /**
+     * Determines whether the subscription is overdue.
+     *
+     * @return bool
+     */
     public function getIsOverdueAttribute(): bool
     {
         if ($this->grace_days_ended_at) {
@@ -164,6 +248,12 @@ class Subscription extends Model
         return $this->expired_at->isPast();
     }
 
+    /**
+     * Determines the next expiration date during renewal.
+     *
+     * @param CarbonInterface|null $expirationDate
+     * @return CarbonInterface|null
+     */
     private function getRenewedExpiration(?CarbonInterface $expirationDate = null)
     {
         if (! empty($expirationDate)) {
