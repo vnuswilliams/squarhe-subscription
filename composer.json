@@ -1,12 +1,14 @@
 {
     "name": "vnuswilliams/squarhe-subscription",
-    "description": "A straightforward interface to handle subscriptions and features consumption inspired by lucasdotvin/laravel-soulbscription package.",
+    "description": "Laravel package to manage subscriptions, plans and feature usage (SaaS-ready).Laravel package to manage subscriptions, plans and feature usage (SaaS-ready).",
+    "type": "library",
     "keywords": [
-        "squarhe",
-        "laravel",
-        "laravel-subscription",
-        "subscriptions"
-    ],
+    "laravel",
+    "subscription",
+    "billing",
+    "saas",
+    "feature flags"
+],
     "homepage": "https://github.com/vnuswilliams/squarhe-subscription",
     "license": "MIT",
     "authors": [
@@ -17,20 +19,20 @@
         }
     ],
     "require": {
-        "php": "^8.0|^8.1|^8.2|^8.3|^8.4|^8.5",
-        "illuminate/contracts": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
-"illuminate/database": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
-"illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0"
+        "php": "^8.2",
+        "illuminate/contracts": "^10.0|^11.0|^12.0|^13.0",
+"illuminate/database": "^10.0|^11.0|^12.0|^13.0",
+"illuminate/support": "^10.0|^11.0|^12.0|^13.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^6.22|^7.0|^8.0|^9.0|^10.0|^11.0",
+        "orchestra/testbench": "^10.0|^11.0",
         "phpunit/phpunit": "^9.5|^10.0|^11.5.3",
         "squizlabs/php_codesniffer": "*"
     },
     "autoload": {
         "psr-4": {
             "Squarhe\\Subscription\\": "src",
-            "Squarhe\\Subscription\\Database\\Factories\\": "database/factories"
+            "Squarhe\\Subscription\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
