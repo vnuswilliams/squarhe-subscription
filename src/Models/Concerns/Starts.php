@@ -4,13 +4,26 @@ namespace Squarhe\Subscription\Models\Concerns;
 
 use Squarhe\Subscription\Models\Scopes\StartingScope;
 
+/**
+ * Adds start-date behavior and started/not-started scope behavior.
+ */
 trait Starts
 {
+    /**
+     * Registers the trait global scope.
+     *
+     * @return void
+     */
     public static function bootStarts()
     {
         static::addGlobalScope(new StartingScope());
     }
 
+    /**
+     * Initializes casts required by the trait.
+     *
+     * @return void
+     */
     public function initializeStarts()
     {
         if (! isset($this->casts['started_at'])) {

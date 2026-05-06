@@ -4,8 +4,16 @@ namespace Squarhe\Subscription;
 
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Package service provider: loads config, migrations, and publishable assets.
+ */
 class SoulbscriptionServiceProvider extends ServiceProvider
 {
+    /**
+     * Registers package configuration, migrations, and publishable assets.
+     *
+     * @return void
+     */
     public function boot()
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/soulbscription.php', 'soulbscription');

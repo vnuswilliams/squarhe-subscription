@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
 
+/**
+ * Global scope: keeps records that are not expired or still within grace period.
+ */
 class ExpiringWithGraceDaysScope implements Scope
 {
     protected $extensions = [

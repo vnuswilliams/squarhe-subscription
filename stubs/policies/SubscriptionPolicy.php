@@ -19,6 +19,7 @@ class SubscriptionPolicy
     public function viewAny(Model $user): bool
     {
         return true;
+    
     }
 
     /**

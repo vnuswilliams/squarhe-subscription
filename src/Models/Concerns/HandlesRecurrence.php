@@ -6,6 +6,9 @@ use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Squarhe\Subscription\Enums\PeriodicityType;
 
+/**
+ * Provides recurrence date calculations for plans and features.
+ */
 trait HandlesRecurrence
 {
     public function calculateNextRecurrenceEnd(CarbonInterface|string|null $start = null): CarbonInterface
