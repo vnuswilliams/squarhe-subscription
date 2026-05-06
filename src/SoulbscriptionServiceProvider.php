@@ -19,6 +19,10 @@ class SoulbscriptionServiceProvider extends ServiceProvider
         ], 'soulbscription-config');
 
         $this->publishes([
+            __DIR__ . '/../stubs/policies/SubscriptionPolicy.php' => app_path('Policies/SubscriptionPolicy.php'),
+        ], 'soulbscription-policies');
+
+        $this->publishes([
             __DIR__ . '/../database/migrations' => database_path('migrations'),
         ], 'soulbscription-migrations');
 
