@@ -1,0 +1,62 @@
+{
+    "name": "vnuswilliams/squarhe-subscription",
+    "description": "A straightforward interface to handle subscriptions and features consumption inspired by lucasdotvin/laravel-soulbscription package.",
+    "keywords": [
+        "squarhe",
+        "laravel",
+        "laravel-subscription",
+        "subscriptions"
+    ],
+    "homepage": "https://github.com/vnuswilliams/squarhe-subscription",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "vnus williams",
+            "email": "payongvenus@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.0|^8.1|^8.2|^8.3|^8.4|^8.5",
+        "illuminate/contracts": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
+"illuminate/database": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
+"illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.22|^7.0|^8.0|^9.0|^10.0|^11.0",
+        "phpunit/phpunit": "^9.5|^10.0|^11.5.3",
+        "squizlabs/php_codesniffer": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Squarhe\\Subscription\\": "src",
+            "Squarhe\\Subscription\\Database\\Factories\\": "database/factories"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "analyse": "vendor/bin/phpcs --standard=phpcs.xml",
+        "test": "vendor/bin/phpunit"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": false
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Squarhe\\Subscription\\SoulbscriptionServiceProvider"
+            ],
+            "aliases": []
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
