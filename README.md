@@ -506,3 +506,69 @@ $subscriber->giveTicketFor('deploy-minutes', null, 10);
 ```bash
 composer test
 ```
+
+### Using Gates and Policies (Laravel Authorization)
+
+If you published the package policy, you can connect subscription checks with Laravel authorization so your business rules stay in one place.
+
+#### 1) Publish policy stubs
+
+```bash
+php artisan vendor:publish --tag="soulbscription-policies"
+```
+
+#### 2) Register policy / gates
+
+In your `AuthServiceProvider`, register the policy (or define gates) so Laravel knows how to authorize actions:
+
+```php
+use Illuminate\Support\Facades\Gate;
+
+public function boot(): void
+{
+    Gate::define('create-project', function ($user) {
+        return $user->hasEnoughCharges('deploy-minutes');
+    });
+
+    Gate::define('use-custom-domain', function ($user) {
+        return $user->canUseFeature('custom-domain');
+    });
+}
+```
+
+> Method names can vary depending on your package version/customization. Keep the feature keys (`deploy-minutes`, `custom-domain`) consistent with your seeders.
+
+#### 3) Use authorization in controllers
+
+```php
+public function store(Request $request)
+{
+    $this->authorize('create-project');
+
+    // Perform business action...
+
+    auth()->user()->consume('deploy-minutes');
+}
+```
+
+#### 4) Use authorization in routes and Blade
+
+```php
+Route::post('/projects', [ProjectController::class, 'store'])
+    ->middleware('can:create-project');
+```
+
+```blade
+@can('use-custom-domain')
+    <x-domain-form />
+@else
+    <x-upgrade-plan-banner />
+@endcan
+```
+
+This pattern gives you:
+- a single source of truth for access rules,
+- clean controllers,
+- safer UI (buttons/forms hidden when user is not allowed),
+- easy upgrade path when plans/features evolve.
+
